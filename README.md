@@ -383,7 +383,7 @@ The following table outlines the structure of a `load_case`:
 | `[2]` | 	`fb`        | `1.0`         | Heading Correction Factor |
 
 
-Additionally, for the `comp_full_load`:
+Additionally, the following table describes the structure of `load_cases_full_load`:
 
 
 | Index  | 	Field Name                | Example Value                    | Description                                                    |
@@ -401,21 +401,9 @@ Additionally, for the `comp_full_load`:
 | `[10]` | 	`fdc`                     | `1.0`                            | Dry Cargo factor $f_{dc}$                                      |
 | `[11]` | 	`design_load`             | `S+D`                            | Load combination (Static / Dynamic)                            |
 
-The following table describes the structure of load_cases_full_load:
 
-Index	Field Name	Example Value	Description
-[0]	coordinates	coordinates_bulk	Coordinates of the geometry.
-[1]	cog	cog	Center of gravity.
-[2]	hHPU	hHPU	Height of HPU.
-[3]	S0	S0	Area S0.
-[4]	Bh	Bh	Width or breadth parameter.
-[5]	Vhc	Vhc	Volume of hopper compartment.
-[6]	lh	lh	Length parameter.
-[7]	angle	90.0	Angle of inclination (in degrees).
-[8]	geometry_hopper	False	Is this a hopper tank or lower stool geometry?
-[9]	geometry_inner	False	Is this an inner bottom geometry?
-[10]	fdc	1.0	Factor fdc.
-[11]	design_load	"S+D"	Load combination (Static / Dynamic).
+
+
 
 ## Usage
 
