@@ -5,7 +5,7 @@
 PRESim is a specialized program designed for calculating external sea 
 pressures $P_{ex}$ on the hull and internal pressures $P_{in}$ on 
 the cargo hold of a Bulk Carrier. The calculations are based on 
-the **Common Structural Rules (CSR) 2024** and use the concept 
+the **Common Structural Rules (CSR) 2024** **[1]** and use the concept 
 of Equivalent Design Waves (EDWs), **only for strength assessment** 
 of the vessel. The resulting pressure distributions can be exported
 and imported into Finite Element Analysis (FEA) software such as
@@ -676,20 +676,49 @@ the above code for the **HSM-1 Full Load** scenario:
     <img src="images/cargo_hold_full_load.png" alt="Dynamic Load Case Result">
 </div>
 
+## Colormap Choices
+The color parameter allows selecting a colormap for the plot.
+Below is a list of available colormap options for `color (str, optional)`
+(default is `'coolwarm'`):
+- `'viridis'`
+- `'plasma'`
+- `'magma'`
+- `'cividis'`
+- `'coolwarm'`
+- `'jet'`
+- `'spring'`
+- `'summer'`
+- `'autumn'`
+- `'winter'`
+- `'ocean'`
+- `'RdYlBu'`
+
 ## Applications
 
-Structural assessment of Bulk Carriers.
+The `save_to_csv` & `save_all_to_csv` function facilitates
+the export of pressure distributions, which can then be
+imported into FEA software. This allows for detailed
+structural analysis of bulk carriers, specifically for 
+strength assessments. By leveraging these imported pressure
+distributions, FEA programs can simulate and evaluate the 
+vessel's structural integrity under various loading conditions.
 
-Importing pressure distributions into FEA software for further analysis.
+The CSV data is exported in the following format:
+
+| x (m) | 	y (m) | z (m) | P (N/m^2) |
+|-------|--------|-------|-----------|
+| 83.71 | 	-9.89 | 18.82 | 0.0       |
+| 84.22 | 	-9.47 | 19.06 | 10353.9   |
+| 84.32 | 	-9.89 | 18.82 | 0.0       |
 
 ## Contribution
 
-Contributions and bug reports are welcome! Please submit issues or pull requests via the project repository.
-
-## License
-
-PRESim is licensed under the MIT License. See the LICENSE file for details.
+Contributions and bug reports are welcome!
+Please submit issues or pull requests via the project repository.
 
 ## Contact
 
 For inquiries or support, contact [michalis.leukioug1@gmail.com]().
+
+## Sources
+**[1]** *IACS, “Common Structural Rules for Bulk Carriers and Oil Tankers.” 2024*. Retrieved from https://iacs.org.uk/
