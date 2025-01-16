@@ -83,14 +83,14 @@ This section describes the parameters for each class and method in PRESim.
 #### Initialization Parameters:
 
 - `coordinates (numpy.ndarray)`: 2D array of calculation points' coordinates `np.array([[x1, y1, z1],..., [xN, yN, zN]])`.
-- `L (float)`: Rule Length (m).
-- `B (float)`: Breadth Moulded (m).
-- `TLC (float)`: Loading Condition Draught (m).
-- `TSC (float)`: Scantling Draught (m).
-- `Cb (float)`: Block Coefficient (-).
+- `L (float)`: Rule Length $L$ $(m)$.
+- `B (float)`: Breadth Moulded $B$ $(m)$.
+- `TLC (float)`: Loading Condition $T_{LC}$ Draught $(m)$.
+- `TSC (float)`: Scantling Draught $T_{SC}$ $(m)$.
+- `Cb (float)`: Block Coefficient $C_{B}$ $(-)$.
 - `Bx_distribution (numpy.ndarray | float)`: 2D array of x-coordinates and corresponding breadth values at waterline.
-- `kr (float)`: Roll Radius of Gyration (m).
-- `GM (float)`: Metacentric Height (m).
+- `kr (float)`: Roll Radius of Gyration $k_{r}$ $(m)$.
+- `GM (float)`: Metacentric Height $GM$ $(m)$.
 - `bilge_keel (bool)`: Whether to include a bilge keel (`True`/`False`).
 
 #### Methods and Parameters:
@@ -103,14 +103,13 @@ the class the last pressure results.
     **<ins>Parameters:</ins>**
    - `base_case (str)`: Load case type (e.g.,`"HSM"`, `"FSM"`, `"HSA"`, etc.).
    - `sub_case (str)`: Sub-case (e.g., `"1"`, `"2"`, `"1P"`, etc.).
-   - `fps (float)`: Strength assessment factor.
+   - `fps (float)`: Strength assessment factor $f_{ps}$.
    - `load_scenario (str)`: Type of load scenario 
    (e.g.,`"Extreme Sea Loads"`, `"Ballast Water Exchange"`).
-   - `fb (float)`: Head correction factor ($f_{β}$).
+   - `fb (float)`: Head correction factor $f_{β}$.
 
-
-2. `plot_last_pressure_data`:
-Plots the last calculated external pressure data.
+    
+2. `plot_last_pressure_data`:Plots the last calculated external pressure data.
 
     **<ins>Parameters:</ins>**
    - `color (str, optional)`: Color map for the plot 
@@ -121,39 +120,147 @@ Plots the last calculated external pressure data.
    - `show_plot (bool, optional)`: Whether to show the plot.
 
 
-No parameters required.
+3. `save_to_csv`: Saves the calculated external pressure data to a CSV file.
 
-Returns: Pressure distribution data.
+    **<ins>Parameters:</ins>**
+   - `file_path (str)`: Directory where the CSV file will be saved.
+   - `file_name (str)`: Name of the CSV file.
 
-calculate_wave_effects():
 
-No parameters required.
+### IntCargoPressureCalc
 
-Returns: Wave effects data.
+#### Initialization Parameters:
+- `L (float)`: Rule Length $L$ $(m)$.
+- `B (float)`: Breadth Moulded $B$ $(m)$.
+- `D (float)`: Depth Moulded $D$ $(m)$.
+- `TLC (float)`: Loading Condition Draught $T_{LC}$ $(m)$.
+- `TSC (float)`: Scantling Draught $T_{SC}$ $(m)$.
+- `Cb (float)`: Block Coefficient $C_{B}$ $(-)$.
+- `kr (float)`: Roll Radius of Gyration $k_{r}$ $(m)$.
+- `GM (float)`: Metacentric Height $GM$ $(m)$.
+- `hdb (float)`: Double Hull height $h_{DB}$ $(m)$.
+- `cargo_type (str)`: Type of cargo (`"General"`, `"Iron Ore"`, or `"Cement"`).
+- `cargo_density (float)`: Cargo Density $ρ_{c}$ $(t/m³)$.
+- `cargo_density_effective (float)`: Effective Cargo Density
+$ρ_{eff}$ $(t/m³)$.
+- `load_scenario (str)`: Load scenario (`"Extreme Sea Loads"`,
+`"Water Exchange"`, `"Accidental Flooded"`, `"Harbour / Sheltered Water"`).
+- `bilge_keel (bool)`: Whether to include bilge keel (`True`/`False`).
 
-IntCargoPressureCalc
+#### Methods and Parameters:
+1. `calculate_load_case_full`: Calculates the internal pressure for a given load case with full cargo conditions.
 
-Initialization Parameters:
+    **<ins>Parameters:</ins>**
+   - `base_case (str)`: Load case type (e.g., `"HSM"`, `"FSM"`,
+   `"HSA"`, etc.).
+   - `sub_case (str)`: Sub-case (e.g., `"1"`, `"2"`, `"1P"`, etc.).
+   - `coordinates (numpy.ndarray)`: Coordinates of 
+   calculation points `np.array([[x1, y1, z1], ..., [xN, yN, zN]])` $(m)$.
+   - `fb (float)`: Head correction factor $f_{β}$.
+   - `center_of_gravity (numpy.ndarray)`: Center of gravity
+   - coordinates for the cargo hold $(x_G, y_G, z_G)$ $(m)$.
+   - `hHPU (float)`: Height $h_{HPU}$ $(m)$.
+   - `S0 (float)`: Area $S_0$ $(m^2)$.
+   - `Bh (float)`: Breadth of Cargo Hold $B_H$ $(m)$.
+   - `Vhc (float)`: Volume of Hatch Coaming $V_{HC}$ $(m^3)$.
+   - `lh (float)`: Length of Cargo $l_H$ $(m)$.
+   - `angle_alpha (numpy.ndarray)`: Angle distribution $a$ $(deg)$ related to $z$ $(m)$.
+   - `shear_load_hopper (bool)`: Include shear load for hopper 
+   tank for this geometry (`True`/`False`).
+   - `shear_load_inner_bottom (bool)`: Include shear load
+   for inner bottom for this geometry (`True`/`False`).
+   - `fdc (float)`: Dry Cargo Factor $f_{dc}$.
+   - `design_load (str)`: Design load ("S+D", "S", "D").
 
-param1 (type): Description of param1.
+   **<ins>Return:</ins>**
+   - `(np.ndarray)`: The result of the load case calculation .
 
-param2 (type): Description of param2.
 
-param3 (type): Description of param3.
+2. `calculate_load_case_partial`: Calculates the internal 
+pressure for a given load case with full cargo conditions.
 
-Methods and Parameters:
+    **<ins>Parameters:</ins>**
 
-calculate_pressures():
+   - `base_case (str)`: Base case identifier (e.g., `"HSM"`, `"FSM"`).
+   - `sub_case (str)`: Subcase identifier (e.g., `"1"`, `"1P"`).
+   - `coordinates (np.ndarray)`: Array of coordinates representing the geometry $(m)$.
+   - `fb (float)`: Heading correction factor $f_β$.
+   - `center_of_gravity (np.ndarray)`: Coordinates of the center of 
+   gravity $(m)$.
+   - `hHPL (float)`: Vertical distance $h_{HPL}$ $(m)$.
+   - `Bh (float)`: Breadth of the cargo hold $B_H$ $(m)$.
+   - `Bib (float)`: Breadth of the inner bottom $B_{ib}$ $(m)$.
+   - `M (float)`: Mass of the bulk cargo $M$ $(t)$.
+   - `Vts (float)`: Volume of the lower bulkhead stools $V_{TS}$ $(m^3)$.
+   - `lh (float)`: Length of the cargo hold $l_H$ $(m)$.
+   - `angle_alpha (numpy.ndarray)`: Angle distribution $a$ $(deg)$ related to $z$ $(m)$.
+   - `shear_load_hopper (bool)`: Include shear load 
+   for hopper tank for this geometry (`True`/`False`).
+   - `shear_load_inner_bottom (bool)`: Include shear load
+   for inner bottom for this geometry (`True`/`False`).
+   - `design_load (str)`: Load scenario (`"S"`, `"D"`, `"S+D"`). Defaults to `"S+D"`.
+   - `fdc (float)`: Dry Cargo factor $f_{dc}$ (default is 1.0).
 
-No parameters required.
+   **<ins>Return:</ins>**
+   - `(np.ndarray)`: The result of the load case calculation .
 
-Returns: Pressure distribution data for the cargo.
+The result of the load case calculation (np.ndarray).
 
-calculate_cargo_effects():
 
-No parameters required.
+3. `plot_last_pressure_data`: Plots the last calculated 
+internal pressure data.
 
-Returns: Cargo effects data.
+    **<ins>Parameters:</ins>**
+
+   - `color (str, optional)`: Color map for the plot (e.g., `'coolwarm'`).
+   - `size (int, optional)`: Size of the markers.
+   - `file_path (str, optional)`: Path to save the plot (if not specified,
+   the plot is not saved).
+   - `file_name (str, optional)`: Name for the saved plot file (if not specified,
+   the plot is not saved).
+   - `show_plot (bool, optional)`: Whether to show the plot (`True`/`False`).
+
+
+4. `save_to_csv`: Saves the calculated internal pressure
+data to a CSV file.
+
+    **<ins>Parameters:</ins>**
+
+   - `file_path (str)`: Directory where the CSV file will be saved.
+   - `file_name (str)`: Name of the CSV file.
+
+
+5. save_all_to_csv: Saves all the added pressure data of the class
+to a CSV file.
+
+    **<ins>Parameters:</ins>**
+
+   - `file_path (str)`: Directory where the CSV file will be saved.
+   - `file_name (str)`: Name of the CSV file.
+
+
+6. `add_pressure_data`: Adds the last calculated 
+pressure data to the class, either initializing or 
+appending to the existing pressure data array.
+
+
+7. `clear_all_pressure_data`: Clears all stored 
+
+
+8. `plot_all_pressure_data`: Plots all the stored pressure data,
+with customization options for the appearance of the plot.
+pressure data in the class.
+
+    **<ins>Parameters:</ins>**
+
+   - `color (str, optional)`: Color map for the plot (e.g., `'coolwarm'`).
+   - `size (int, optional)`: Size of the markers.
+   - `file_path (str, optional)`: Path to save the plot (if not specified,
+   the plot is not saved).
+   - `file_name (str, optional)`: Name for the saved plot file (if not specified,
+   the plot is not saved).
+   - `show_plot (bool, optional)`: Whether to show the plot (`True`/`False`).
+   - `title (str, optional)`: Set the title of the diagram.
 
 
 ## Usage
