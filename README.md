@@ -148,6 +148,10 @@ the class the last pressure results.
    - `file_name (str)`: Name of the CSV file.
 
 
+4. `print_data_summary`: Displays a summary of the load analysis data in 
+a table format
+
+
 ### IntCargoPressureCalc
 
 #### Initialization Parameters:
@@ -282,6 +286,10 @@ pressure data in the class.
    the plot is not saved).
    - `show_plot (bool, optional)`: Whether to show the plot (`True`/`False`).
    - `title (str, optional)`: Set the title of the diagram.
+
+
+9. `print_data_summary`: Displays a summary of the load analysis data in 
+a table format
 
 ### Utility Functions
 
