@@ -57,12 +57,12 @@ minimize the pitch acceleration, with waves from the port side
 ## Installation
 1. Clone the repository:
    ```bash
-   git clone https://github.com/Lalis98/DynLoadCalc
+   git clone https://github.com/Lalis98/PRESim
    ```
 
 2. Navigate to the project directory:
    ```bash
-   cd DynLoadCalc
+   cd PRESim
    ```
 
 3. Install required dependencies:
