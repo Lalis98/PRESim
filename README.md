@@ -126,6 +126,9 @@ the class the last pressure results.
    (e.g.,`"Extreme Sea Loads"`, `"Ballast Water Exchange"`).
    - `fb (float)`: Head correction factor $f_{β}$.
 
+   **<ins>Return:</ins>**
+   - `(np.ndarray)`: The result of the load case calculation .
+
     
 2. `plot_last_pressure_data`:Plots the last calculated external pressure data.
 
