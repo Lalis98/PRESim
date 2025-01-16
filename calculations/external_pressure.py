@@ -1494,11 +1494,11 @@ class ExternalSeaPressureCalc:
         )
 
 
-    def save_to_csv(self, path: str, file_name: str):
+    def save_to_csv(self, file_path: str, file_name: str):
         """
         Save the pressure data to a CSV file.
 
-        :param path: (str) Directory where the CSV file will be saved.
+        :param file_path: (str) Directory where the CSV file will be saved.
         :param file_name: (str) Name of the CSV file.
 
         :return: None
@@ -1518,7 +1518,7 @@ class ExternalSeaPressureCalc:
             'Pressure (N/m^2)': Pressure_vals * 1E3
         })
 
-        full_file_path = f"{path.rstrip('/')}/{file_name}"  # Construct the full file path
+        full_file_path = f"{file_path.rstrip('/')}/{file_name}"  # Construct the full file path
 
         pressure_data.to_csv(full_file_path, index=False)  # Save the DataFrame to CSV
 

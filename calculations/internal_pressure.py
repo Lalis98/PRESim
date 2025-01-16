@@ -1,4 +1,5 @@
 import numpy as np
+import pandas as pd
 from calculations.coefficients import *
 from calculations.pressure_calculations import *
 from calculations.load_combination_factors import *
@@ -435,6 +436,36 @@ class IntCargoPressureCalc:
             file_name=file_name,
             show_plot=show_plot
         )
+
+    def save_to_csv(self, file_path: str, file_name: str):
+        """
+        Save the pressure data to a CSV file.
+
+        :param file_path: (str) Directory where the CSV file will be saved.
+        :param file_name: (str) Name of the CSV file.
+
+        :return: None
+        """
+
+        # Extract values and convert to a DataFrame
+        x_vals = self.last_pressure_data["data"][:, 0]
+        y_vals = self.last_pressure_data["data"][:, 1]
+        z_vals = self.last_pressure_data["data"][:, 2]
+        Pressure_vals = self.last_pressure_data["data"][:, 3]
+
+        # Create the DataFrame and set it as an attribute
+        pressure_data = pd.DataFrame({
+            'x (m)': x_vals,
+            'y (m)': y_vals,
+            'z (m)': z_vals,
+            'Pressure (N/m^2)': Pressure_vals * 1E3
+        })
+
+        full_file_path = f"{file_path.rstrip('/')}/{file_name}"  # Construct the full file path
+
+        pressure_data.to_csv(full_file_path, index=False)  # Save the DataFrame to CSV
+
+        print(f"Data exported successfully to {full_file_path}")
 
 
 
