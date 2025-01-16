@@ -1,5 +1,4 @@
 from calculations.external_pressure import *
-from calculations.coefficients import *
 from calculations.internal_pressure import *
 from utils.utils import *
 
@@ -61,7 +60,6 @@ def main():
     #                                    INTERNAL CARGO PRESSURES - FULL LOADING
     # ==================================================================================================================
 
-    # [base case, subcase, fβ)
     load_cases = [
         ["HSM", "1", 1.05],
         ["HSM", "2", 1.05],
@@ -87,19 +85,7 @@ def main():
         ["OSA", "2S", 1.0],
     ]
 
-
-    # load_cases_full_load[0]: Coordinates of the geometry
-    # load_cases_full_load[1]: Center of Gravity
-    # load_cases_full_load[2]: Height hHPU
-    # load_cases_full_load[3]: Area S0
-    # load_cases_full_load[4]: Volume Vhc
-    # load_cases_full_load[5]: Length lh
-    # load_cases_full_load[6]: Angle α
-    # load_cases_full_load[7]: Geometry of hopper tank or Lower stool? (include Shear Load)
-    # load_cases_full_load[8]: Geometry of inner bottom? (include Shear Load)
-    # load_cases_full_load[9]: Factor fdc
-    # load_cases_full_load[10]: Design load ("S+D", "S", "D")
-    load_cases_full_load = [
+    comp_full_load = [
         [coordinates_bulk, cog, hHPU, S0, Bh, Vhc, lh, 90.0, False, False, 1.0, "S+D"],
         [coordinates_hopper, cog, hHPU, S0, Bh, Vhc, lh, 51.249, True, False, 1.0, "S+D"],
         [coordinates_inner, cog, hHPU, S0, Bh, Vhc, lh, 0.0, False, True, 1.0, "S+D"],
@@ -124,9 +110,6 @@ def main():
         bilge_keel=True
     )
 
-    # process_load_cases_full(internal_analysis, load_cases, load_cases_full_load,
-    #                         show_plot=True)
-
     # ==================================================================================================================
     #                                 INTERNAL CARGO PRESSURES - PARTIAL LOADING
     # ==================================================================================================================
@@ -148,20 +131,9 @@ def main():
         bilge_keel=True
     )
 
-    # load_cases_partial_load[0]: Coordinates of the geometry
-    # load_cases_partial_load[1]: Center of Gravity
-    # load_cases_partial_load[2]: Height hHPL
-    # load_cases_partial_load[3]: Breadth Bh
-    # load_cases_partial_load[4]: Breadth Bib
-    # load_cases_partial_load[5]: Mass M
-    # load_cases_partial_load[6]: Volume Vts
-    # load_cases_partial_load[7]: Length lh
-    # load_cases_partial_load[8]: Angle α
-    # load_cases_partial_load[9]: Geometry of hopper tank or Lower stool? (include Shear Load)
-    # load_cases_partial_load[10]: Geometry of inner bottom? (include Shear Load)
-    # load_cases_partial_load[11]: Factor fdc
-    # load_cases_partial_load[12]: Design load ("S+D", "S", "D")
-    load_cases_partial_load = [
+    internal_analysis.print_data_summary()
+
+    comp_partial_load = [
         [coordinates_bulk, cog, hHPL, Bh, Bib, M, Vts, lh, 90.0, False, False, 1.0, "S+D"],
         [coordinates_hopper, cog, hHPL, Bh, Bib, M, Vts, lh, 51.249, True, False, 1.0, "S+D"],
         [coordinates_inner, cog, hHPL, Bh, Bib, M, Vts, lh, 0.0, False, True, 1.0, "S+D"],
@@ -173,8 +145,6 @@ def main():
     #                                         EXTERNAL SEA PRESSURES
     # ==================================================================================================================
 
-    # |    [0]    |    [1]   | [2] |      [3]      |   [4]  |      [5]      |
-    # | base_case | sub_case | fps | load_scenario |   fb   |  design_load  |
     load_cases = [
         ["HSM", "1", 1.0, "Extreme Sea Loads", 1.05, "S+D"],
         ["HSM", "2", 1.0, "Extreme Sea Loads", 1.05, "S+D"],
@@ -215,13 +185,13 @@ def main():
 
     external_analysis.print_data_summary()
 
-    process_load_cases_external(
-        external_analysis,
-        load_cases,
-        color='coolwarm',
-        file_path="C:/Users/micha/Downloads/figures",
-        size=5,
-        show_plot=True)
+    # process_load_cases_external(
+    #     external_analysis,
+    #     load_cases,
+    #     color='coolwarm',
+    #     file_path="C:/Users/user/Downloads/figures",
+    #     size=5,
+    #     show_plot=True)
 
 
 if __name__ == "__main__":
