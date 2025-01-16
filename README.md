@@ -517,6 +517,30 @@ Also the following table describes the structure of `comp_partial_load`:
 | `[10]` | 	`fdc`                     | `1.0`                            | Dry Cargo factor $f_{dc}$                                      |
 | `[11]` | 	`design_load`             | `S+D`                            | Load combination (Static / Dynamic)                            |
 
+## Run
+
+The program is executed from the `main.py` file. It begins by 
+setting the necessary data for the structural analysis.
+Once the data is set, the relevant classes,
+such as `ExternalSeaPressureCalc` and `InternalPressureCalc`,
+need to be initialized.
+
+### Run Example
+
+```python
+from calculations.external_pressure import *
+from calculations.internal_pressure import *
+from utils.utils import *
+
+def main():
+ 
+    rule_length = 218.372    # Rule Length (m)
+    # ... 
+    external_analysis.print_data_summary()
+
+if __name__ == "__main__":
+    main()
+```
 
 ## Usage
 
