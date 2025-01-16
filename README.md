@@ -74,9 +74,27 @@ minimize the pitch acceleration, with waves from the port side
    ```bash
    pip install numpy matplotlib pandas
    ```
+
 ## Parameters for Classes and Methods
 
 This section describes the parameters for each class and method in PRESim.
+
+
+### Methods Overview
+
+For both classes, the following attributes for methods are used for
+`base_case` and `sub_case` calculations:
+
+- For `base_case` of `"HSM"` or`"FSM"` or `"HSA"`:
+  - `sub_case="1"`
+  - `sub_case="2"`
+
+
+- For `base_case` of `"BSR"` or`"BSP"` or `"OSA"` or `"OST"`:
+  - `sub_case="1P"`
+  - `sub_case="2P"`
+  - `sub_case="1S"`
+  - `sub_case="2S"`
 
 ### ExternalSeaPressureCalc
 
@@ -498,22 +516,6 @@ Also the following table describes the structure of `comp_partial_load`:
 
 
 ## Usage
-
-### Methods Overview
-
-For both classes, the following attributes for methods are used for
-`base_case` and `sub_case` calculations:
-
-- For `base_case` of `"HSM"` or`"FSM"` or `"HSA"`:
-  - `sub_case="1"`
-  - `sub_case="2"`
-
-
-- For `base_case` of `"BSR"` or`"BSP"` or `"OSA"` or `"OST"`:
-  - `sub_case="1P"`
-  - `sub_case="2P"`
-  - `sub_case="1S"`
-  - `sub_case="2S"`
 
 ### ExternalSeaPressureCalc
 
