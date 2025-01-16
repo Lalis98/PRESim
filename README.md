@@ -230,7 +230,7 @@ data to a CSV file.
    - `file_name (str)`: Name of the CSV file.
 
 
-5. save_all_to_csv: Saves all the added pressure data of the class
+5. `save_all_to_csv`: Saves all the added pressure data of the class
 to a CSV file.
 
     **<ins>Parameters:</ins>**
@@ -262,6 +262,160 @@ pressure data in the class.
    - `show_plot (bool, optional)`: Whether to show the plot (`True`/`False`).
    - `title (str, optional)`: Set the title of the diagram.
 
+### Utility Functions
+
+Utility functions for processing multiple load 
+cases and generating pressure diagrams. The following methods
+are called in the `main.py`.
+
+1. `process_load_cases_external`:
+Processes external load cases by calculating and
+visualizing pressure distributions for sea loads.
+
+```python
+from utils.utils import *
+from calculations.external_pressure import *
+import numpy as np
+
+# Initialize the ExternalSeaPressureCalc class
+external_analysis = ExternalSeaPressureCalc(
+    coordinates=np.array([1.0, 1.0, 1.0]),  # Coordinates of calculation points (example)
+    # ...
+    bilge_keel=True  # Including Bilge Keel
+)
+
+load_cases = [
+    ["HSM", "1", 1.0, "Extreme Sea Loads", 1.05, "S+D"],
+    # ...
+    ["OSA", "2S", 1.0, "Extreme Sea Loads", None, "S+D"],
+]
+
+process_load_cases_external(
+    external_analysis,
+    load_cases,
+    file_path=None,
+    color='coolwarm',
+    size=5,
+    show_plot=True
+)
+```
+The following table outlines the structure of a `load_case`:
+
+| Index | 	Field Name      | Example Value         | Description                         |
+|-------|------------------|-----------------------|-------------------------------------|
+| `[0]` | 	`base_case`     | `"HSM"`               | Base case identifier                |
+| `[1]` | 	`sub_case`      | `"1"`                 | Sub-case identifier                 |
+| `[2]` | 	`fps`           | `1.0`                 | Factor for Strength Assessment      |
+| `[3]` | 	`load_scenario` | `"Extreme Sea Loads"` | Description of the load scenario    |
+| `[4]` | 	`design_load`   | `S+D`                 | Load combination (Static / Dynamic) |
+
+2. `process_load_cases_full`:
+Automates the processing of full load cases, including calculations and visualization.
+
+```python
+from utils.utils import *
+from calculations.internal_pressure import *
+import numpy as np
+
+coordinates_bulk = np.array(  # Data points of bulkhead geometry
+    [1.,2., 3.],
+    # ...
+    [2.,3., 4.],
+)
+
+coordinates_side = np.array(  # Data points of side shell geometry
+    [7.,2., 2.],
+    # ...
+    [8.,3., 4.],
+)
+
+cog = np.array([95.62, 0.0, 11.19])     # Center of Gravity of Cargo Hold (x, y, z) (m)
+angle_distribution_side = np.array([
+    [5.68, 15.20, 90.0],                # 5.68 m < z < 15.20 m, angle is 90.0 deg
+    [15.20, 23.90, 147.688]             # 15.20 m < z < 23.90 m, angle is 147.0 deg
+])
+hHPU = 13.46                            # Height hHPU (m)
+S0 = 125.840                            # Area S0 (m²)
+Bh = 32.240                             # Breadth of Cargo Hold (m)
+Vhc = 360.78                            # Volume of Hatch Coaming (m³)
+lh = 25.480                             # Length of Cargo (m)
+
+# Initialize the IntCargoPressureCalc class
+internal_analysis = IntCargoPressureCalc(
+    L=218.372,
+    # ...
+    bilge_keel=True
+)
+
+# Different Load Cases to run for full loading
+load_cases = [
+    ["HSM", "1", 1.05],
+    # ...
+    ["OSA", "2S", 1.0],
+]
+
+# Different compartments consisting the geometry
+comp_full_load = [
+    [coordinates_bulk, cog, hHPU, S0, Bh, Vhc, lh, 90.0, False, False, 1.0, "S+D"],
+    # ...
+    [coordinates_side, cog, hHPU, S0, Bh, Vhc, lh, angle_distribution_side, False, False, 1.0, "S+D"]
+]
+
+
+process_load_cases_full(
+    internal_analysis,
+    load_cases,
+    comp_full_load,
+    show_plot=True,
+    file_path=None,
+    file_name=None,
+    color='coolwarm',
+    size=5
+)
+```
+
+The following table outlines the structure of a `load_case`:
+
+| Index | 	Field Name  | Example Value | Description               |
+|-------|--------------|---------------|---------------------------|
+| `[0]` | 	`base_case` | `"HSM"`       | Base case identifier      |
+| `[1]` | 	`sub_case`  | `"1"`         | Sub-case identifier       |
+| `[2]` | 	`fb`        | `1.0`         | Heading Correction Factor |
+
+
+Additionally, for the `comp_full_load`:
+
+
+| Index  | 	Field Name                | Example Value                    | Description                         |
+|--------|----------------------------|----------------------------------|-------------------------------------|
+| `[0]`  | 	`coordinates`             | `np.array([1.0, 0.0, 11.0],...)` | Base case identifier                |
+| `[1]`  | 	`centre_of_gravity`       | `np.array([95, 0.0, 12])`        | Sub-case identifier                 |
+| `[2]`  | 	`hHPU`                    | `13.5`                           | Factor for Strength Assessment      |
+| `[3]`  | 	`S0`                      | `120.0`                          | Description of the load scenario    |
+| `[4]`  | 	`Bh`                      | `32.0`                           | Load combination (Static / Dynamic) |
+| `[5]`  | 	`Vhc`                     | `350.0`                          | Base case identifier                |
+| `[6]`  | 	`lh`                      | `25.0`                           | Sub-case identifier                 |
+| `[7]`  | 	`angle_alpha`             | `90.0`                           | Factor for Strength Assessment      |
+| `[8]`  | 	`shear_load_hopper`       | `True`                           | Description of the load scenario    |
+| `[9]`  | 	`shear_load_inner_bottom` | `False`                          | Load combination (Static / Dynamic) |
+| `[10]` | 	`fdc`                     | `1.0`                            | Description of the load scenario    |
+| `[11]` | 	`design_load`             | `S+D`                            | Load combination (Static / Dynamic) |
+
+The following table describes the structure of load_cases_full_load:
+
+Index	Field Name	Example Value	Description
+[0]	coordinates	coordinates_bulk	Coordinates of the geometry.
+[1]	cog	cog	Center of gravity.
+[2]	hHPU	hHPU	Height of HPU.
+[3]	S0	S0	Area S0.
+[4]	Bh	Bh	Width or breadth parameter.
+[5]	Vhc	Vhc	Volume of hopper compartment.
+[6]	lh	lh	Length parameter.
+[7]	angle	90.0	Angle of inclination (in degrees).
+[8]	geometry_hopper	False	Is this a hopper tank or lower stool geometry?
+[9]	geometry_inner	False	Is this an inner bottom geometry?
+[10]	fdc	1.0	Factor fdc.
+[11]	design_load	"S+D"	Load combination (Static / Dynamic).
 
 ## Usage
 
