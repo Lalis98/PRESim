@@ -402,7 +402,99 @@ Additionally, the following table describes the structure of `load_cases_full_lo
 | `[11]` | 	`design_load`             | `S+D`                            | Load combination (Static / Dynamic)                            |
 
 
+3. `process_load_cases_partial`:
+Handles processing of partial load cases, with visualization options for each case.
 
+```python
+from utils.utils import *
+from calculations.internal_pressure import *
+import numpy as np
+
+coordinates_bulk = np.array(  # Data points of bulkhead geometry
+    [1.,2., 3.],
+    # ...
+    [2.,3., 4.],
+)
+
+coordinates_side = np.array(  # Data points of side shell geometry
+    [7.,2., 2.],
+    # ...
+    [8.,3., 4.],
+)
+
+cog = np.array([95.62, 0.0, 11.19])     # Center of Gravity of Cargo Hold (x, y, z) (m)
+angle_distribution_side = np.array([
+    [5.68, 15.20, 90.0],                # 5.68 m < z < 15.20 m, angle is 90.0 deg
+    [15.20, 23.90, 147.688]             # 15.20 m < z < 23.90 m, angle is 147.0 deg
+])
+
+Bh = 32.240                             # Breadth of Cargo Hold (m)
+lh = 25.480                             # Length of Cargo (m)
+hHPL = 3.95                             # Height hHPL (m)
+Bib = 23.80                             # Breadth of Inner Bottom (m)
+M = 21_401.5                            # Considered Mass of the Cargo (t)
+Vts = 700.0                             # Volume of lower stools and hopper tanks within lh (m³)
+
+# Initialize the IntCargoPressureCalc class
+internal_analysis = IntCargoPressureCalc(
+    L=218.372,
+    # ...
+    bilge_keel=True
+)
+
+# Different Load Cases to run for partial loading
+load_cases = [
+    ["HSM", "1", 1.05],
+    # ...
+    ["OSA", "2S", 1.0],
+]
+
+# Different compartments consisting the geometry
+comp_partial_load = [
+    [coordinates_bulk, cog, hHPL, Bh, Bib, M, Vts, lh, 90.0, False, False, 1.0, "S+D"],
+    # ...
+    [coordinates_side, cog, hHPL, Bh, Bib, M, Vts, lh, angle_distribution_side, False, False, 1.0, "S+D"]
+]
+
+process_load_cases_full(
+    internal_analysis,
+    load_cases,
+    comp_partial_load,
+    show_plot=True,
+    file_path=None,
+    file_name=None,
+    color='coolwarm',
+    size=5
+)
+```
+
+The following table outlines the structure of a `load_case`:
+
+| Index | 	Field Name  | Example Value | Description               |
+|-------|--------------|---------------|---------------------------|
+| `[0]` | 	`base_case` | `"HSM"`       | Base case identifier      |
+| `[1]` | 	`sub_case`  | `"1"`         | Sub-case identifier       |
+| `[2]` | 	`fb`        | `1.0`         | Heading Correction Factor |
+
+
+Also the following table describes the structure of `comp_partial_load`:
+
+
+| Index  | 	Field Name                | Example Value                    | Description                                                    |
+|--------|----------------------------|----------------------------------|----------------------------------------------------------------|
+| `[0]`  | 	`coordinates`             | `np.array([1.0, 0.0, 11.0],...)` | Coordinates of the geometry $(m)$                              |
+| `[1]`  | 	`centre_of_gravity`       | `np.array([95, 0.0, 12])`        | Center of gravity $(m)$                                        |
+| `[2]`  | 	`hHPL`                    | `4.0`                            | Height of $h_{HPL}$ $(m)$                                      |
+| `[3]`  | 	`Bh`                      | `32.0`                           | Breadth $B_H$ $(m)$                                            |
+| `[3]`  | 	`Bib`                     | `28.0`                           | Breadth $B_{ib}$ $(m)$                                         |
+| `[4]`  | 	`M`                       | `20000.0`                        | Mass $M$ $(t)$                                                 |
+| `[5]`  | 	`Vts`                     | `750.0`                          | Volume $V_{TS}$ $(m^3)$                                        |
+| `[6]`  | 	`lh`                      | `25.0`                           | Length $l_h$ $(m)$                                             |
+| `[7]`  | 	`angle_alpha`             | `90.0`                           | Angle $a$ $(deg)$                                              |
+| `[8]`  | 	`shear_load_hopper`       | `True`                           | Include shear load (if geometry is hopper tank or lower stool) |
+| `[9]`  | 	`shear_load_inner_bottom` | `False`                          | Include shear load (if geometry is inner bottom)               |
+| `[10]` | 	`fdc`                     | `1.0`                            | Dry Cargo factor $f_{dc}$                                      |
+| `[11]` | 	`design_load`             | `S+D`                            | Load combination (Static / Dynamic)                            |
 
 
 ## Usage
