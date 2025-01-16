@@ -386,20 +386,20 @@ The following table outlines the structure of a `load_case`:
 Additionally, for the `comp_full_load`:
 
 
-| Index  | 	Field Name                | Example Value                    | Description                         |
-|--------|----------------------------|----------------------------------|-------------------------------------|
-| `[0]`  | 	`coordinates`             | `np.array([1.0, 0.0, 11.0],...)` | Base case identifier                |
-| `[1]`  | 	`centre_of_gravity`       | `np.array([95, 0.0, 12])`        | Sub-case identifier                 |
-| `[2]`  | 	`hHPU`                    | `13.5`                           | Factor for Strength Assessment      |
-| `[3]`  | 	`S0`                      | `120.0`                          | Description of the load scenario    |
-| `[4]`  | 	`Bh`                      | `32.0`                           | Load combination (Static / Dynamic) |
-| `[5]`  | 	`Vhc`                     | `350.0`                          | Base case identifier                |
-| `[6]`  | 	`lh`                      | `25.0`                           | Sub-case identifier                 |
-| `[7]`  | 	`angle_alpha`             | `90.0`                           | Factor for Strength Assessment      |
-| `[8]`  | 	`shear_load_hopper`       | `True`                           | Description of the load scenario    |
-| `[9]`  | 	`shear_load_inner_bottom` | `False`                          | Load combination (Static / Dynamic) |
-| `[10]` | 	`fdc`                     | `1.0`                            | Description of the load scenario    |
-| `[11]` | 	`design_load`             | `S+D`                            | Load combination (Static / Dynamic) |
+| Index  | 	Field Name                | Example Value                    | Description                                                    |
+|--------|----------------------------|----------------------------------|----------------------------------------------------------------|
+| `[0]`  | 	`coordinates`             | `np.array([1.0, 0.0, 11.0],...)` | Coordinates of the geometry                                    |
+| `[1]`  | 	`centre_of_gravity`       | `np.array([95, 0.0, 12])`        | Center of gravity                                              |
+| `[2]`  | 	`hHPU`                    | `13.5`                           | Height of $h_{HPU}$                                            |
+| `[3]`  | 	`S0`                      | `120.0`                          | Area $S_{0}$                                                   |
+| `[4]`  | 	`Bh`                      | `32.0`                           | Breadth $B_H$                                                  |
+| `[5]`  | 	`Vhc`                     | `350.0`                          | Volume $V_{HC}$                                                |
+| `[6]`  | 	`lh`                      | `25.0`                           | Length $l_h$                                                   |
+| `[7]`  | 	`angle_alpha`             | `90.0`                           | Angle $a$                                                      |
+| `[8]`  | 	`shear_load_hopper`       | `True`                           | Include shear load (if geometry is hopper tank or lower stool) |
+| `[9]`  | 	`shear_load_inner_bottom` | `False`                          | Include shear load (if geometry is inner bottom)               |
+| `[10]` | 	`fdc`                     | `1.0`                            | Dry Cargo factor $f_{dc}$                                      |
+| `[11]` | 	`design_load`             | `S+D`                            | Load combination (Static / Dynamic)                            |
 
 The following table describes the structure of load_cases_full_load:
 
