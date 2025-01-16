@@ -388,14 +388,14 @@ Additionally, for the `comp_full_load`:
 
 | Index  | 	Field Name                | Example Value                    | Description                                                    |
 |--------|----------------------------|----------------------------------|----------------------------------------------------------------|
-| `[0]`  | 	`coordinates`             | `np.array([1.0, 0.0, 11.0],...)` | Coordinates of the geometry                                    |
-| `[1]`  | 	`centre_of_gravity`       | `np.array([95, 0.0, 12])`        | Center of gravity                                              |
-| `[2]`  | 	`hHPU`                    | `13.5`                           | Height of $h_{HPU}$                                            |
-| `[3]`  | 	`S0`                      | `120.0`                          | Area $S_{0}$                                                   |
-| `[4]`  | 	`Bh`                      | `32.0`                           | Breadth $B_H$                                                  |
-| `[5]`  | 	`Vhc`                     | `350.0`                          | Volume $V_{HC}$                                                |
-| `[6]`  | 	`lh`                      | `25.0`                           | Length $l_h$                                                   |
-| `[7]`  | 	`angle_alpha`             | `90.0`                           | Angle $a$                                                      |
+| `[0]`  | 	`coordinates`             | `np.array([1.0, 0.0, 11.0],...)` | Coordinates of the geometry $(m)$                              |
+| `[1]`  | 	`centre_of_gravity`       | `np.array([95, 0.0, 12])`        | Center of gravity $(m)$                                        |
+| `[2]`  | 	`hHPU`                    | `13.5`                           | Height of $h_{HPU}$ $(m)$                                      |
+| `[3]`  | 	`S0`                      | `120.0`                          | Area $S_{0}$ $(m^2)$                                           |
+| `[4]`  | 	`Bh`                      | `32.0`                           | Breadth $B_H$ $(m)$                                            |
+| `[5]`  | 	`Vhc`                     | `350.0`                          | Volume $V_{HC}$ $(m^3)$                                        |
+| `[6]`  | 	`lh`                      | `25.0`                           | Length $l_h$ $(m)$                                             |
+| `[7]`  | 	`angle_alpha`             | `90.0`                           | Angle $a$ $(deg)$                                              |
 | `[8]`  | 	`shear_load_hopper`       | `True`                           | Include shear load (if geometry is hopper tank or lower stool) |
 | `[9]`  | 	`shear_load_inner_bottom` | `False`                          | Include shear load (if geometry is inner bottom)               |
 | `[10]` | 	`fdc`                     | `1.0`                            | Dry Cargo factor $f_{dc}$                                      |
