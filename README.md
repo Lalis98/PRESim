@@ -57,8 +57,8 @@ classDiagram
         +double calculateCargoWeight(double volume, double density)  // This could be external to ShipAttributes
     }
 
-    ShipAttributes <|-- ExternalSeaPressureCalc : "inherits"
-    ShipAttributes <|-- IntCargoPressureCalc : "inherits"
+    ShipAttributes <|-- ExternalSeaPressureCalc
+    ShipAttributes <|-- IntCargoPressureCalc
     
     
 
