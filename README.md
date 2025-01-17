@@ -11,43 +11,59 @@ of the vessel. The resulting pressure distributions can be exported
 and imported into Finite Element Analysis (FEA) software such as
 ANSYS, ABAQUS, or open-source alternatives.
 
+
 ```mermaid
 classDiagram
     class ShipAttributes {
-        -float L
-        -float B
-        -float D
-        -float TLC
-        -float TSC
-        -float Cb
-        -float kr
-        -float GM
-        -float hdb
-        -bool bilge_keel
-        -str cargo_type
-        -float cargo_density
-        -float cargo_density_effective
-        -str load_scenario
-        -float rho
-        -float g
-        +ShipAttributes(L, B, D, TLC, TSC, Cb, kr, GM, hdb, cargo_type, cargo_density, cargo_density_effective, load_scenario, bilge_keel)
+        -L: float
+        -B: float
+        -D: float
+        -TLC: float
+        -TSC:float
+        -Cb: float
+        -kr: float
+        -GM: float
+        -bilge_keel: bool
+        -rho: float
+        -g: float
     }
 
     class ExternalSeaPressureCalc {
-        -np.ndarray coordinates
-        -np.ndarray Bx_positions
-        -np.ndarray Bx_values
-        -float fBK
-        +ExternalSeaPressureCalc(coordinates, ShipAttributes)
+        -coordinates: np.ndarray
+        -Bx_distribution: np.ndarray
+        +print_data_summary()
+        +calculate_load_case(base_case, sub_case, *parameters)
+        +plot_last_pressure_data(*parameters, **options)
+        +save_to_csv(*parameters)
     }
 
     class IntCargoPressureCalc {
-        +IntCargoPressureCalc(ShipAttributes)
+        -cargo_type: str
+        -cargo_density: float
+        -cargo_density_effective: float
+        -load_scenario: str
+        +print_data_summary()
+        +calculate_load_case_full(base_case, sub_case, *parameters)
+        +calculate_load_case_partial(base_case, sub_case, *parameters)
+        +add_pressure_data()
+        +clear_all_pressure_data()
+        +plot_last_pressure_data(*parameters, **options)
+        +plot_all_pressure_data(*parameters, **options)
+        +save_to_csv(*parameters)
+        +save_all_to_csv(*parameters)
+    }
+    
+    class UtilityFunctions {
+        +double calculateCargoWeight(double volume, double density)  // This could be external to ShipAttributes
     }
 
     ShipAttributes <|-- ExternalSeaPressureCalc : "inherits"
     ShipAttributes <|-- IntCargoPressureCalc : "inherits"
+    
+    
+
 ```
+
 
 ## Features
 
