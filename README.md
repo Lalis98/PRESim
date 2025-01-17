@@ -52,10 +52,6 @@ classDiagram
         +save_to_csv(*parameters)
         +save_all_to_csv(*parameters)
     }
-    
-    class UtilityFunctions {
-        +double calculateCargoWeight(double volume, double density)  // This could be external to ShipAttributes
-    }
 
     ShipAttributes <|-- ExternalSeaPressureCalc
     ShipAttributes <|-- IntCargoPressureCalc
