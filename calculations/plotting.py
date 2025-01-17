@@ -3,10 +3,12 @@ import matplotlib.pyplot as plt
 import os
 
 def plot_pressure_data(pressure_data: np.ndarray, title: str, color: str,
-                       size: int, file_path: str, file_name: str, show_plot: bool):
+                       size: int, file_path: str, file_name: str, show_plot: bool,
+                       cbar_label: str = r'$P_\mathrm{ex}\ (\mathrm{kN/m}^2)$'):
     """
     Plot the extracted pressure data (x, y, z, Pressure) in a 3D scatter plot with configurable color.
 
+    :param cbar_label:
     :param pressure_data: Array of shape (n, 4), where each row contains the values [x, y, z, Pressure].
     :type pressure_data: np.ndarray
     :param title: The title to display on the plot.
@@ -34,7 +36,7 @@ def plot_pressure_data(pressure_data: np.ndarray, title: str, color: str,
 
     # Color bar for pressure
     cbar = plt.colorbar(sc, ax=ax, orientation='vertical', pad=0.2, fraction=0.05)
-    cbar.set_label(r'$P_\mathrm{ex}\ (\mathrm{kN/m}^2)$')
+    cbar.set_label(cbar_label)
 
     # Set axis labels
     ax.set_xlabel(r'$x\ (\mathrm{m})$')

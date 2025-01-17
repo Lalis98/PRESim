@@ -11,8 +11,50 @@ of the vessel. The resulting pressure distributions can be exported
 and imported into Finite Element Analysis (FEA) software such as
 ANSYS, ABAQUS, or open-source alternatives.
 
+```mermaid
+classDiagram
+    class ShipAttributes {
+        -float L
+        -float B
+        -float D
+        -float TLC
+        -float TSC
+        -float Cb
+        -float kr
+        -float GM
+        -float hdb
+        -bool bilge_keel
+        -str cargo_type
+        -float cargo_density
+        -float cargo_density_effective
+        -str load_scenario
+        -float rho
+        -float g
+        +ShipAttributes(L, B, D, TLC, TSC, Cb, kr, GM, hdb, cargo_type, cargo_density, cargo_density_effective, load_scenario, bilge_keel)
+    }
+
+    class ExternalSeaPressureCalc {
+        -np.ndarray coordinates
+        -np.ndarray Bx_positions
+        -np.ndarray Bx_values
+        -float fBK
+        +ExternalSeaPressureCalc(coordinates, ShipAttributes)
+    }
+
+    class IntCargoPressureCalc {
+        +IntCargoPressureCalc(ShipAttributes)
+    }
+
+    ShipAttributes <|-- ExternalSeaPressureCalc : "inherits"
+    ShipAttributes <|-- IntCargoPressureCalc : "inherits"
+```
+
 ## Features
 
+- **<ins>Ship Attributes:</ins>** The `ShipAttributes` class acts as a
+centralized repository for common ship design parameters, such as
+rule length, breadth, draughts, block coefficient, and metacentric
+height. These parameters are shared and accessed by other classes.
 - **<ins>External Pressure Calculation:</ins>** Calculates sea 
 pressures acting on the hull using the `ExternalSeaPressureCalc` class.
 - **<ins>Internal Pressure Calculation:</ins>** Calculates pressures

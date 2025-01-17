@@ -2,8 +2,16 @@ from calculations.external_pressure import *
 from calculations.internal_pressure import *
 from utils.utils import *
 
-
 def main():
+
+    # ==================================================================================================================
+    #                                          CONFIGURATION
+    # ==================================================================================================================
+
+    # Configurations for LaTeX rendering
+    configure_latex_font(
+        use_latex=True
+    )
 
     # ==================================================================================================================
     #                                         IMPORT GEOMETRIES
@@ -38,7 +46,7 @@ def main():
         ])                                  # (2, N): 2 rows (x-coordinates and breadth), N columns (positions NUMBER)
     roll_radius = 0.4 * breadth             # Roll Radius of Gyration (m)
     metacentric_height = 0.2 * breadth      # Metacentric height (m)
-    cog = np.array([95.62, 0.0, 11.19])     # Center of Gravity of Cargo Hold (x, y, z) (m)
+    cog = np.array([95.62, 0.0, 11.19]) # 95.62 / 145.36      # Center of Gravity of Cargo Hold (x, y, z) (m)
 
     angle_distribution_side = np.array([
         [5.68, 15.20, 90.0],                # 5.68 m < z < 15.20 m, angle is 90.0 deg
@@ -104,11 +112,13 @@ def main():
         GM=metacentric_height,
         hdb=double_hull,
         cargo_type="General",  # Allowed values are: 'General', 'Iron Ore', or 'Cement'
-        cargo_density=1.535,
-        cargo_density_effective=1.600,
+        cargo_density=1.452,
+        cargo_density_effective=1.535,
         load_scenario="Extreme Sea Loads",  # Allowed values are: "Extreme Sea Loads", "Water Exchange", "Accidental Flooded", "Harbour / Sheltered Water"
         bilge_keel=True
     )
+
+    # process_load_cases_full(internal_analysis, load_cases, comp_full_load)
 
     # ==================================================================================================================
     #                                 INTERNAL CARGO PRESSURES - PARTIAL LOADING
@@ -185,13 +195,13 @@ def main():
 
     external_analysis.print_data_summary()
 
-    # process_load_cases_external(
-    #     external_analysis,
-    #     load_cases,
-    #     color='coolwarm',
-    #     file_path="C:/Users/user/Downloads/figures",
-    #     size=5,
-    #     show_plot=True)
+    process_load_cases_external(
+        external_analysis,
+        load_cases,
+        color='coolwarm',
+        # file_path="C:/Users/user/Downloads/figures",
+        size=5,
+        show_plot=True)
 
 
 if __name__ == "__main__":

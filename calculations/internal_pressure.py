@@ -6,11 +6,13 @@ from calculations.load_combination_factors import *
 from calculations.accelerations import *
 from calculations.plotting import *
 
-class IntCargoPressureCalc:
+from calculations.ship_attributes import *
 
-    def __init__(self, L: float, B: float, D: float, TLC: float, TSC: float, Cb: float,
-                  kr: float, GM: float, hdb: float, cargo_type: str,
-                 cargo_density: float, cargo_density_effective: float, load_scenario: str, bilge_keel: bool):
+class IntCargoPressureCalc(ShipAttributes):
+
+    def __init__(self, L: float, B: float, D: float, TLC: float, TSC: float, Cb: float, kr: float, GM: float,
+                 hdb: float, cargo_type: str, cargo_density: float, cargo_density_effective: float, load_scenario: str,
+                 bilge_keel: bool):
         """
         A class to calculate internal cargo pressures and associated parameters for ship designs.
 
@@ -44,6 +46,8 @@ class IntCargoPressureCalc:
 
         # Set the attributes
         # self.coordinates = coordinates
+        super().__init__(L, B, TLC, TSC, Cb, kr, GM, bilge_keel)
+
         self.L = L                                  # Rule Length (m)
         self.L0 = max(110.0, self.L)                # Rule Length but not taken less than 110 (m)
         self.B = B                                  # Breadth Moulded (m)
@@ -405,7 +409,8 @@ class IntCargoPressureCalc:
             size=size,
             file_path=file_path,
             file_name=file_name,
-            show_plot=show_plot
+            show_plot=show_plot,
+            cbar_label=r'$P_\mathrm{in}\ (\mathrm{kN/m}^2)$'
         )
 
     def plot_all_pressure_data(self, color: str = 'coolwarm', size: int = 5, file_path: str = None,
@@ -413,6 +418,7 @@ class IntCargoPressureCalc:
         """
         Plots the last calculated pressure data.
 
+        :param title: Title of the plot.
         :param color: Colormap for the plot (default is 'coolwarm').
         :type color: str
         :param size: Size of the markers in the plot (default is 5).
@@ -434,7 +440,8 @@ class IntCargoPressureCalc:
             size=size,
             file_path=file_path,
             file_name=file_name,
-            show_plot=show_plot
+            show_plot=show_plot,
+            cbar_label=r'$P_\mathrm{in}\ (\mathrm{kN/m}^2)$'
         )
 
     def save_to_csv(self, file_path: str, file_name: str):

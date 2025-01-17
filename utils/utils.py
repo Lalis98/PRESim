@@ -1,4 +1,4 @@
-
+import matplotlib.pyplot as plt
 
 def process_load_cases_full(internal_analysis, load_cases, load_cases_full_load,
                        show_plot: bool = True, file_path: str = None, file_name: str = None,
@@ -17,6 +17,8 @@ def process_load_cases_full(internal_analysis, load_cases, load_cases_full_load,
 
     :return: None
     """
+    design_load = None
+
     for name_case in load_cases:
         for load_case in load_cases_full_load:
             internal_analysis.calculate_load_case_full(
@@ -36,11 +38,11 @@ def process_load_cases_full(internal_analysis, load_cases, load_cases_full_load,
                 fdc=load_case[10],
                 design_load=load_case[11]
             )
-
+            design_load = load_case[11]
             internal_analysis.add_pressure_data()
 
         internal_analysis.plot_all_pressure_data(
-            title=name_case[0] + "-" + name_case[1],
+            title=f"Dynamic Load Case: {name_case[0]}-{name_case[1]} ({design_load})",
             show_plot=show_plot,
             file_path=file_path,
             file_name=file_name,
@@ -67,6 +69,8 @@ def process_load_cases_partial(internal_analysis, load_cases, load_cases_partial
 
     :return: None
     """
+    design_load = None
+
     for name_case in load_cases:
         for load_case in load_cases_partial_load:
             internal_analysis.calculate_load_case_partial(
@@ -87,11 +91,13 @@ def process_load_cases_partial(internal_analysis, load_cases, load_cases_partial
                 fdc=load_case[11],
                 design_load=load_case[12]
             )
+
+            design_load = load_case[11]
             internal_analysis.add_pressure_data()
 
         # After processing all partial loads for the case
         internal_analysis.plot_all_pressure_data(
-            title=f"{name_case[0]}-{name_case[1]}",
+            title=f"Dynamic Load Case: {name_case[0]}-{name_case[1]} ({design_load})",
             show_plot=show_plot,
             file_path=file_path,
             file_name=file_name,
@@ -139,7 +145,26 @@ def process_load_cases_external(
                 size=size,
                 file_path=file_path,
                 file_name=f"{base_case}-{sub_case}.png",
-                show_plot=show_plot
+                show_plot=show_plot,
             )
         except Exception as e:
             print(f"Error calculating load case {base_case}-{sub_case}: {e}")
+
+def configure_latex_font(use_latex=True):
+    """
+    Configures the global settings for Matplotlib font.
+
+    Parameters:
+        use_latex (bool): Enables or disables LaTeX rendering for Matplotlib.
+    """
+    if use_latex:
+        plt.rcParams.update({
+            "text.usetex": True,
+            "font.family": "serif",
+            "font.serif": ["Computer Modern Roman"],
+        })
+    else:
+        plt.rcParams.update({
+            "text.usetex": False,
+            "font.family": "sans-serif",
+        })

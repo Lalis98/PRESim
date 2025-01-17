@@ -1,5 +1,4 @@
 import numpy as np
-import matplotlib.pyplot as plt
 import pandas as pd
 
 from calculations.data_processing import *
@@ -7,7 +6,9 @@ from calculations.coefficients import *
 from calculations.pressure_calculations import *
 from calculations.plotting import *
 
-class ExternalSeaPressureCalc:
+from calculations.ship_attributes import *
+
+class ExternalSeaPressureCalc(ShipAttributes):
     """
     This class calculates the pressures for dynamic load cases according to Common Structural Rules,
     based on various parameters like ship dimensions, loading conditions, and draughts. It is used for
@@ -35,9 +36,10 @@ class ExternalSeaPressureCalc:
     """
 
     def __init__(self, coordinates: np.ndarray, L: float, B: float, TLC: float, TSC: float, Cb: float,
-                 Bx_distribution: np.ndarray, kr: float, GM:float, bilge_keel: bool):
+                 Bx_distribution: np.ndarray, kr: float, GM: float, bilge_keel: bool):
 
 
+        super().__init__(L, B, TLC, TSC, Cb, kr, GM, bilge_keel)
         if not isinstance(coordinates, np.ndarray):   # Ensure coordinates is a 2D numpy array
             raise ValueError("coordinates must be a numpy array")
 
@@ -1445,7 +1447,7 @@ class ExternalSeaPressureCalc:
         pressure_data = _calculate_total_pressure(data_points=self.coordinates)
         pressure_data = np.array(pressure_data)  # Convert to numpy array
 
-        self.update_pressure_data(pressure_data, f"Dynamic Load Case: OSA-{sub_case} ({design_load})") # Update last pressure data
+        self.update_pressure_data(pressure_data, f"Dynamic Load Case: OSA-{sub_case} ({design_load})")
 
         return pressure_data
 
