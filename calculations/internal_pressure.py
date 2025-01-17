@@ -1,6 +1,6 @@
 import numpy as np
 import pandas as pd
-from calculations.coefficients import *
+
 from calculations.pressure_calculations import *
 from calculations.load_combination_factors import *
 from calculations.accelerations import *
