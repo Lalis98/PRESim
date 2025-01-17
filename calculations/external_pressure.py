@@ -49,21 +49,8 @@ class ExternalSeaPressureCalc(ShipAttributes):
 
         # Set the attributes
         self.coordinates = coordinates              # Coordinates (x,y,z) (m)
-        self.L = L                                  # Rule Length (m)
-        self.L0 = max(110.0, self.L)                # Rule Length but not taken less than 110 (m)
-        self.B = B                                  # Breadth Moulded (m)
-        self.TLC = TLC                              # Loading Condition Draught (m)
-        self.TSC = TSC                              # Scantling Draught (m)
-        self.Cb = Cb                                # Block Coefficient (-)
         self.Bx_positions = Bx_distribution[0, :]   # Moulded Breath at the Waterline (m)
         self.Bx_values = Bx_distribution[1, :]      # Moulded Breath at the Waterline (m)
-        self.kr = kr                                # Roll Radius of Gyration (m)
-        self.GM = GM                                # Metacentric height (m)
-        self.fBK = calculate_fBK(bilge_keel)        # Coefficient fBK
-
-        # Constants
-        self.rho = 1.025                            # Seawater density (t/m^3)
-        self.g = 9.81                               # Gravity Acceleration (m/s^2)
 
         # Internal Calculations
         self.fT = max(0.5, TLC / TSC)                   # Ratio of Loading to Scantling Draught
@@ -74,7 +61,6 @@ class ExternalSeaPressureCalc(ShipAttributes):
             "data": np.array([]),
             "case": ""
         }
-
 
     def calculate_load_case(self, base_case: str, sub_case: str, fps: float, load_scenario: str = "Extreme Sea Loads",
                             fb: float = None, design_load: str = "S+D"):

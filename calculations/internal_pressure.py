@@ -48,24 +48,11 @@ class IntCargoPressureCalc(ShipAttributes):
         # self.coordinates = coordinates
         super().__init__(L, B, TLC, TSC, Cb, kr, GM, bilge_keel)
 
-        self.L = L                                  # Rule Length (m)
-        self.L0 = max(110.0, self.L)                # Rule Length but not taken less than 110 (m)
-        self.B = B                                  # Breadth Moulded (m)
         self.D = D                                  # Depth Moulded (m)
-        self.TLC = TLC                              # Loading Condition Draught (m)
-        self.TSC = TSC                              # Scantling Draught (m)
-        self.Cb = Cb                                # Block Coefficient (-)
-        self.kr = kr                                # Roll Radius of Gyration (m)
-        self.GM = GM                                # Metacentric height (m)
         self.hdb = hdb                              # Height of Double Hull (m)
         self.rho_c = cargo_density                  # Cargo Density (t/m^3)
         self.rho_eff = cargo_density_effective      # Effective Cargo Density (t/m^3)
         self.load_scenario = load_scenario          # Load scenario determining the fp (fps)
-        self.fBK = calculate_fBK(bilge_keel)        # Coefficient for Bilge Keel
-
-        # Constants
-        self.rho = 1.025                            # Seawater density (t/m^3)
-        self.g = 9.81                               # Gravity Acceleration (m/s^2)
 
         # Internal Calculations
         self.fT = max(0.5, self.TLC / self.TSC)         # Ratio of Loading to Scantling Draught

@@ -70,27 +70,27 @@ def main():
 
     load_cases = [
         ["HSM", "1", 1.05],
-        ["HSM", "2", 1.05],
-        ["FSM", "1", 1.05],
-        ["FSM", "2", 1.05],
-        ["HSA", "1", 1.0],
-        ["HSA", "2", 1.0],
-        ["BSR", "1P", 0.8],
-        ["BSR", "1S", 0.8],
-        ["BSR", "2P", 0.8],
-        ["BSR", "2S", 0.8],
-        ["BSP", "1P", 0.8],
-        ["BSP", "1S", 0.8],
-        ["BSP", "2P", 0.8],
-        ["BSP", "2S", 0.8],
-        ["OST", "1P", 1.0],
-        ["OST", "1S", 1.0],
-        ["OST", "2P", 1.0],
-        ["OST", "2S", 1.0],
-        ["OSA", "1P", 1.0],
-        ["OSA", "1S", 1.0],
-        ["OSA", "2P", 1.0],
-        ["OSA", "2S", 1.0],
+        # ["HSM", "2", 1.05],
+        # ["FSM", "1", 1.05],
+        # ["FSM", "2", 1.05],
+        # ["HSA", "1", 1.0],
+        # ["HSA", "2", 1.0],
+        # ["BSR", "1P", 0.8],
+        # ["BSR", "1S", 0.8],
+        # ["BSR", "2P", 0.8],
+        # ["BSR", "2S", 0.8],
+        # ["BSP", "1P", 0.8],
+        # ["BSP", "1S", 0.8],
+        # ["BSP", "2P", 0.8],
+        # ["BSP", "2S", 0.8],
+        # ["OST", "1P", 1.0],
+        # ["OST", "1S", 1.0],
+        # ["OST", "2P", 1.0],
+        # ["OST", "2S", 1.0],
+        # ["OSA", "1P", 1.0],
+        # ["OSA", "1S", 1.0],
+        # ["OSA", "2P", 1.0],
+        # ["OSA", "2S", 1.0],
     ]
 
     comp_full_load = [
@@ -118,7 +118,7 @@ def main():
         bilge_keel=True
     )
 
-    # process_load_cases_full(internal_analysis, load_cases, comp_full_load)
+    process_load_cases_full(internal_analysis, load_cases, comp_full_load)
 
     # ==================================================================================================================
     #                                 INTERNAL CARGO PRESSURES - PARTIAL LOADING
